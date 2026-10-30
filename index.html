@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3bd35" />
+  <title>FoodBridge | Community Food Rescue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="FoodBridge home">
+        <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 17.5c5.2-7.1 12.8-8.2 18-7.5-1.5 7.5-7.2 13.3-15.8 12.4"/><path d="M8 24c3.2-5.7 7.5-9.1 13.2-12"/></svg></span>
+        <span><strong>FoodBridge</strong><small>COMMUNITY FOOD RESCUE</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="overview"><span class="nav-icon">◫</span> Overview</button>
+        <button class="nav-link" data-view="donations"><span class="nav-icon">▣</span> Food listings <span class="nav-count" id="navListingsCount">0</span></button>
+        <button class="nav-link" data-view="my-activity"><span class="nav-icon">↗</span> My activity</button>
+        <button class="nav-link" data-view="impact"><span class="nav-icon">✳</span> SDG impact</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sdg-mini">
+          <div class="sdg-mini-top"><span class="sdg-dot"></span><span>IMPACT MISSION</span></div>
+          <strong>Good food. Less waste.</strong>
+          <p>Helping communities share surplus food responsibly.</p>
+          <div class="sdg-tags"><span>SDG 2</span><span>SDG 12</span></div>
+        </div>
+        <div class="profile">
+          <div class="avatar">FB</div>
+          <div class="profile-copy"><strong>Community demo</strong><small>Local browser workspace</small></div>
+          <span class="profile-menu">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Toggle menu">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="breadcrumbCurrent">Overview</strong></div>
+        <div class="topbar-right"><span class="demo-status"><i></i> Demo environment</span><button class="icon-button" id="resetDemo" title="Restore sample data" aria-label="Restore sample data">↻</button></div>
+      </header>
+
+      <section class="page-content">
+        <div class="welcome-row">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> COMMUNITY FOOD RESCUE NETWORK</div>
+            <h1 id="pageTitle">Make surplus <em>matter.</em></h1>
+            <p class="page-subtitle" id="pageSubtitle">A local-first dashboard to connect available food with people who can use it.</p>
+          </div>
+          <button class="primary-button" id="openDonationTop"><span>＋</span> List a donation</button>
+        </div>
+
+        <div class="notice-banner">
+          <div class="notice-icon" aria-hidden="true">✦</div>
+          <div class="notice-copy"><strong>Small actions can create a meaningful local impact.</strong><span>List safe, suitable food with clear pickup details. Always follow local food-safety guidance.</span></div>
+          <div class="notice-cartoon" aria-hidden="true">
+            <svg viewBox="0 0 150 100" role="img"><g class="cartoon-float"><ellipse cx="75" cy="83" rx="46" ry="7" fill="#2d302b" opacity=".10"/><path d="M34 49c0-21 18-35 41-35s41 14 41 35v17H34z" fill="#f2bf3d" stroke="#252820" stroke-width="2.5"/><path d="M28 48h94c0 9-8 15-17 15H45c-9 0-17-6-17-15" fill="#fff7df" stroke="#252820" stroke-width="2.5"/><circle cx="61" cy="43" r="3" fill="#252820"/><circle cx="87" cy="43" r="3" fill="#252820"/><path d="M64 52q10 9 20 0" fill="none" stroke="#252820" stroke-width="2.5" stroke-linecap="round"/><path d="M52 13l-5-7m50 9 6-8" stroke="#e87959" stroke-width="3" stroke-linecap="round"/><path d="M20 33l7 3m96 18 7-3" stroke="#252820" stroke-width="2" stroke-linecap="round"/></g><path d="M117 15c-1-9 7-13 14-9-1 8-6 12-14 9z" fill="#8fb58b" stroke="#252820" stroke-width="2"/><path d="M116 16l11-8" stroke="#252820" stroke-width="1.5"/></svg>
+          </div>
+          <div class="notice-location"><span class="location-pin">⌖</span><span>Campus community<br><strong>Gharuan · Kharar</strong></span></div>
+        </div>
+
+        <section class="stats-grid" aria-label="Food rescue statistics">
+          <article class="stat-card">
+            <div class="stat-head"><span>Active listings</span><span class="stat-icon icon-green" aria-hidden="true">♧</span></div>
+            <div class="stat-value" id="statActive">0</div>
+            <div class="stat-foot"><span class="tiny-dot green-dot"></span><span>Available for pickup</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-head"><span>Food rescued</span><span class="stat-icon icon-peach" aria-hidden="true">♡</span></div>
+            <div class="stat-value" id="statRescued">0 <small>portions</small></div>
+            <div class="stat-foot"><span class="tiny-dot peach-dot"></span><span>Claimed in this demo</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-head"><span>Pickup urgency</span><span class="stat-icon icon-yellow" aria-hidden="true">◷</span></div>
+            <div class="stat-value" id="statUrgent">0</div>
+            <div class="stat-foot"><span class="tiny-dot yellow-dot"></span><span>Ready within 3 hours</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-head"><span>Community actions</span><span class="stat-icon icon-blue" aria-hidden="true">✦</span></div>
+            <div class="stat-value" id="statActions">0</div>
+            <div class="stat-foot"><span class="tiny-dot blue-dot"></span><span>Listings + claims</span></div>
+          </article>
+        </section>
+
+        <div class="content-grid">
+          <section class="panel listings-panel" id="listingPanel">
+            <div class="panel-heading">
+              <div><div class="section-kicker">FOOD RESCUE BOARD</div><h2>Available near the community</h2><p>Browse surplus food that has been listed for collection.</p></div>
+              <button class="text-button" id="viewAllListings">View all <span>→</span></button>
+            </div>
+            <div class="filter-row">
+              <label class="search-box"><span>⌕</span><input type="search" id="searchInput" placeholder="Search food, donor or area…" autocomplete="off"></label>
+              <select id="categoryFilter" aria-label="Filter by food category"><option value="all">All categories</option><option value="Cooked meals">Cooked meals</option><option value="Bakery">Bakery</option><option value="Produce">Produce</option><option value="Packaged food">Packaged food</option><option value="Other">Other</option></select>
+              <select id="statusFilter" aria-label="Filter by listing status"><option value="available">Available</option><option value="all">All statuses</option><option value="claimed">Claimed</option></select>
+            </div>
+            <div class="listing-list" id="listingList" aria-live="polite"></div>
+            <div class="empty-state hidden" id="emptyState"><div class="empty-illustration">⌕</div><strong>No matching food listings</strong><p>Try another search or add a donation to the board.</p><button class="secondary-button" id="emptyAddDonation">List a donation</button></div>
+            <div class="panel-footer"><span id="listingSummary">Showing listings</span><span class="footer-note"><i></i> Sample data · stored locally</span></div>
+          </section>
+
+          <aside class="right-column">
+            <section class="panel map-panel" aria-labelledby="mapTitle">
+              <div class="panel-heading compact-heading"><div><div class="section-kicker">LOCAL FOOD NETWORK</div><h2 id="mapTitle">Campus pickup map</h2><p class="map-subtitle">Chandigarh University · Gharuan</p></div><span class="map-live"><i></i> Live listings</span></div>
+              <div id="foodMap" class="food-map" role="region" aria-label="Interactive map of demo food donation pickup points"></div>
+              <div class="map-legend"><span><i class="legend-dot urgent"></i> Urgent pickup</span><span><i class="legend-dot normal"></i> Available</span><span><i class="legend-dot claimed"></i> Claimed</span></div>
+              <p class="map-disclaimer">Demo pickup pins are approximate campus-area examples, not verified addresses. Listings with supplied coordinates will use those coordinates.</p>
+            </section>
+            <section class="panel impact-panel">
+              <div class="panel-heading compact-heading"><div><div class="section-kicker">YOUR CONTRIBUTION</div><h2>Impact snapshot</h2></div><button class="more-button" id="goImpact" aria-label="View impact details">↗</button></div>
+              <div class="impact-highlight">
+                <div class="impact-number" id="impactPortions">0</div>
+                <div><strong>portions rescued</strong><span>Based on claimed listings</span></div>
+                <span class="impact-spark">↗</span>
+              </div>
+              <div class="progress-label"><span>Rescue goal</span><strong><span id="goalProgress">0</span>%</strong></div>
+              <div class="progress-track"><div class="progress-fill" id="goalProgressBar"></div></div>
+              <div class="goal-caption"><span>0 portions</span><span>Goal: 100 portions</span></div>
+              <div class="mini-divider"></div>
+              <div class="sdg-row">
+                <div class="sdg-square sdg-two">2</div>
+                <div class="sdg-copy"><strong>Zero Hunger</strong><span>Make food more accessible</span></div>
+                <span class="sdg-arrow">↗</span>
+              </div>
+              <div class="sdg-row">
+                <div class="sdg-square sdg-twelve">12</div>
+                <div class="sdg-copy"><strong>Responsible Consumption</strong><span>Reduce avoidable food waste</span></div>
+                <span class="sdg-arrow">↗</span>
+              </div>
+              <button class="wide-link" id="impactDetails">Explore SDG impact <span>→</span></button>
+            </section>
+
+            <section class="panel quick-panel">
+              <div class="panel-heading compact-heading"><div><div class="section-kicker">QUICK ACTION</div><h2>Have food to share?</h2></div><div class="quick-emoji" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M12 38c0-15 10-25 20-25s20 10 20 25v8H12z" fill="#f4c542" stroke="currentColor" stroke-width="2.5"/><path d="M8 37h48c0 8-6 13-14 13H22C14 50 8 45 8 37z" fill="#fff8df" stroke="currentColor" stroke-width="2.5"/><circle cx="25" cy="32" r="2" fill="currentColor"/><circle cx="39" cy="32" r="2" fill="currentColor"/><path d="M26 40q6 5 12 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+              <p>Turn safe surplus food into a useful resource for someone nearby.</p>
+              <button class="secondary-button full-width" id="openDonationSide">＋ Create food listing</button>
+              <div class="safety-note"><span>ⓘ</span><span>Only list food that can be safely stored, transported and consumed.</span></div>
+            </section>
+          </aside>
+        </div>
+        <footer class="page-footer"><span>FoodBridge <span class="footer-separator">·</span> Student project prototype</span><span>Built around <strong>SDG 2</strong> and <strong>SDG 12</strong></span></footer>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="donationModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header"><div><div class="section-kicker">COMMUNITY CONTRIBUTION</div><h2 id="modalTitle">List a food donation</h2><p>Share clear details so a recipient can plan a safe pickup.</p></div><button class="close-button" data-close="donationModal" aria-label="Close">×</button></div>
+      <form id="donationForm">
+        <div class="form-grid">
+          <label class="field full-field">Food listing title<input name="title" required maxlength="70" placeholder="e.g. Fresh vegetable meal boxes"></label>
+          <label class="field">Food category<select name="category" required><option value="Cooked meals">Cooked meals</option><option value="Bakery">Bakery</option><option value="Produce">Produce</option><option value="Packaged food">Packaged food</option><option value="Other">Other</option></select></label>
+          <label class="field">Portions / packs<input name="portions" type="number" min="1" max="5000" required placeholder="e.g. 12"></label>
+          <label class="field">Donor name<input name="donor" required maxlength="50" placeholder="Restaurant, hostel, household…"></label>
+          <label class="field">Pickup area<input name="area" required maxlength="60" placeholder="Sector / neighbourhood"></label>
+          <label class="field">Pickup available for<select name="window" required><option value="Within 1 hour">Within 1 hour</option><option value="Within 3 hours" selected>Within 3 hours</option><option value="Today">Today</option><option value="Tomorrow">Tomorrow</option></select></label>
+          <label class="field">Food condition<select name="condition" required><option value="Freshly prepared">Freshly prepared</option><option value="Sealed / packaged">Sealed / packaged</option><option value="Fresh produce">Fresh produce</option><option value="Bakery surplus">Bakery surplus</option></select></label>
+          <label class="field full-field">Pickup and safety notes<textarea name="notes" rows="3" maxlength="220" placeholder="Storage, allergens, packaging, pickup instructions…"></textarea></label>
+        </div>
+        <label class="checkbox-field"><input type="checkbox" name="safety" required><span>I confirm this listing is accurate and the food has been handled responsibly.</span></label>
+        <div class="form-actions"><button type="button" class="secondary-button" data-close="donationModal">Cancel</button><button type="submit" class="primary-button">Publish listing <span>→</span></button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="claimModal" role="dialog" aria-modal="true" aria-labelledby="claimTitle">
+    <div class="modal claim-modal">
+      <div class="modal-header"><div><div class="section-kicker">PICKUP COORDINATION</div><h2 id="claimTitle">Claim this donation</h2><p>Confirm who will coordinate the collection.</p></div><button class="close-button" data-close="claimModal" aria-label="Close">×</button></div>
+      <div class="claim-summary" id="claimSummary"></div>
+      <form id="claimForm">
+        <input type="hidden" name="id">
+        <label class="field">Your name / group<input name="claimer" required maxlength="50" placeholder="e.g. Campus volunteer team"></label>
+        <label class="field">Contact note (optional)<input name="contact" maxlength="80" placeholder="Preferred contact method or pickup note"></label>
+        <div class="claim-disclaimer">This demo records a local claim only. It does not contact the donor or arrange a real pickup.</div>
+        <div class="form-actions"><button type="button" class="secondary-button" data-close="claimModal">Cancel</button><button type="submit" class="primary-button">Confirm claim <span>→</span></button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="script.js"></script>
+</body>
+</html>

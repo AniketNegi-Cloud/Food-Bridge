@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="280" viewBox="0 0 280 280" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <!-- fork -->
+  <g transform="translate(38 44) rotate(-24)"><path d="M-7 -24v12c0 4 3 7 7 7s7-3 7-7v-12"/><path d="M0 -24v17"/><path d="M0 2v28"/></g>
+  <!-- plate -->
+  <g transform="translate(150 36)"><circle r="21"/><circle r="12"/></g>
+  <!-- carrot -->
+  <g transform="translate(236 56) rotate(35)"><path d="M0 -18q10 6 6 20l-6 16-6-16q-4-14 6-20z"/><path d="M0 -18l-4-8M0 -18v-10M0 -18l4-8"/><path d="M-3 -4h5M-2 6h4"/></g>
+  <!-- spoon -->
+  <g transform="translate(78 140) rotate(22)"><ellipse cx="0" cy="-16" rx="7" ry="10"/><path d="M0 -6v34"/></g>
+  <!-- bread loaf -->
+  <g transform="translate(172 150)"><path d="M-24 8a24 15 0 0 1 48 0v11h-48z"/><path d="M-10 -6l-3 8M2 -8l-3 9M13 -6l-3 8"/></g>
+  <!-- container -->
+  <g transform="translate(244 176)"><rect x="-19" y="-6" width="38" height="24" rx="4"/><path d="M-22 -6h44"/><path d="M-8 -12h16"/></g>
+  <!-- tomato -->
+  <g transform="translate(40 236)"><circle r="14"/><path d="M-6 -12l6 4 6-4M0 -8v-7"/></g>
+  <!-- plate + fork small -->
+  <g transform="translate(130 238)"><circle r="14"/><circle r="7"/></g>
+  <!-- leaf -->
+  <g transform="translate(212 250) rotate(-30)"><path d="M0 14C-14 6-12 -10 0 -18c12 8 14 24 0 32z"/><path d="M0 14V-10"/></g>
+</svg>
