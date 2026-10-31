@@ -42,6 +42,3 @@ This is a **front-end student prototype**. `localStorage` only saves data in the
 
 For production deployment, add a backend/database, authentication, donor-recipient messaging, moderation, verified coordinates, and appropriate food-safety and privacy processes. Use OpenStreetMap tiles in accordance with its current usage policy.
 
-## Viva explanation
-
-> FoodBridge is a community food-rescue dashboard designed to make surplus food visible and easier to claim. It supports SDG 2, Zero Hunger, and SDG 12, Responsible Consumption and Production. HTML structures the interface, CSS handles responsive styling and animation, and vanilla JavaScript validates forms, renders listings, filters data, records claims, updates impact metrics, stores data in `localStorage`, and synchronizes map markers with the current listing state.
